@@ -254,8 +254,6 @@ include ("profiling/functionentry.lua")
 
 -- Other
 GCompute.Other = {}
-include ("metadata/other/expression2.lua")
-include ("metadata/other/lemongate.lua")
 
 -- Runtime function calls
 include ("functioncalls/functionresolutiontype.lua")
@@ -271,15 +269,8 @@ include ("executioncontext.lua")
 include ("languagedetector.lua")
 include ("languages.lua")
 include ("language.lua")
-include ("languages/brainfuck.lua")
-include ("languages/cpp.lua")
-include ("languages/csharp.lua")
-include ("languages/derpscript.lua")
-include ("languages/expression2.lua")
 include ("languages/glua.lua")
-include ("languages/lemongate.lua")
 include ("languages/lua.lua")
-include ("languages/sqlite.lua")
 
 -- Runtime
 include ("astrunner.lua")
