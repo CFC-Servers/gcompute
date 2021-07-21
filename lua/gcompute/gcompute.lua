@@ -45,6 +45,16 @@ function GCompute.ToFunction (f)
 	return f
 end
 
+local includeStart
+local chunk = 1
+
+local function printTime(name)
+    print("Included chunk (" .. name .. ") " .. chunk .. ", took: " .. SysTime() - includeStart)
+    chunk = chunk + 1
+    includeStart = SysTime()
+end
+
+includeStart = SysTime()
 include ("callbackchain.lua")
 include ("compilermessagetype.lua")
 include ("icompilermessagesink.lua")
@@ -54,6 +64,8 @@ include ("iobject.lua")
 include ("isavable.lua")
 
 include ("substitutionmap.lua")
+
+printTime("setup")
 
 -- Text
 GCompute.Text = {}
@@ -68,25 +80,37 @@ include ("text/coloredtextbuffer.lua")
 include ("text/pipe.lua")
 include ("text/nullpipe.lua")
 
+printTime("text")
+
 -- Interop
 include ("interop/epoe.lua")
 include ("interop/aowl.lua")
 
+printTime("interop")
+
 -- Syntax trees
 include ("astnode.lua")
 include ("ast.lua")
+
+printTime("syntax trees")
 
 -- Visitors
 include ("visitor.lua")
 include ("astvisitor.lua")
 include ("namespacevisitor.lua")
 
+printTime("visitors")
+
 -- Compilation
 include ("compiler/compilationgroup.lua")
 include ("compiler/compilationunit.lua")
 
+printTime("compilation")
+
 -- Regex
 include ("regex/regex.lua")
+
+printTime("regex")
 
 -- Lexing
 GCompute.Lexing = {}
@@ -108,10 +132,14 @@ include ("lexer/tokenstream.lua")           -- This is stupid by extension.
 include ("lexer/linkedlisttokenstream.lua") -- This too.
 include ("lexer/lexertokenstream.lua")      -- And this.
 
+printTime("lexing")
+
 -- Compiler output
 include ("compiler/compilermessage.lua")
 include ("compiler/compilermessagecollection.lua")
 include ("compiler/compilermessagetype.lua")
+
+printTime("compiler output")
 
 -- Compiler passes
 include ("compiler/compilerpasstype.lua")
@@ -136,9 +164,13 @@ include ("assignmentplan.lua")
 include ("variablereadtype.lua")
 include ("variablereadplan.lua")
 
+printTime("compiler passes")
+
 -- Source files
 include ("sourcefilecache.lua")
 include ("sourcefile.lua")
+
+printTime("source files")
 
 -- Type system
 include ("type/typesystem.lua")
@@ -165,6 +197,8 @@ include ("type/referencetype.lua")
 -- Type inference
 include ("type/inferredtype.lua")
 
+printTime("type system")
+
 -- Object resolution
 include ("objectresolution/resolutionobjecttype.lua")
 include ("objectresolution/resolutionresulttype.lua")
@@ -172,6 +206,8 @@ include ("objectresolution/resolutionresult.lua")
 include ("objectresolution/resolutionresults.lua")
 include ("objectresolution/deferredobjectresolution.lua")
 include ("objectresolution/objectresolver.lua")
+
+printTime("object resolution")
 
 -- Compile time and reflection
 include ("metadata/namespacetype.lua")
@@ -207,6 +243,8 @@ include ("metadata/overloadedmethoddefinition.lua")
 include ("metadata/typecurriedclassdefinition.lua")
 include ("metadata/typecurriedmethoddefinition.lua")
 
+printTime("compile time and reflection")
+
 -- Mirror
 include ("metadata/mirror/mirrornamespace.lua")
 
@@ -215,6 +253,8 @@ include ("metadata/mirror/mirrorclassdefinition.lua")
 -- include ("metadata/mirror/mirrormethoddefinition.lua")
 include ("metadata/mirror/mirroroverloadedclassdefinition.lua")
 include ("metadata/mirror/mirroroverloadedmethoddefinition.lua")
+
+printTime("mirror")
 
 -- Parameters and arguments
 include ("metadata/parameterlist.lua")
@@ -228,6 +268,8 @@ include ("metadata/emptytypeargumentlist.lua")
 
 include ("metadata/mergedlocalscope.lua")
 
+printTime("parameters and arguments")
+
 -- Lua
 GCompute.Lua = {}
 include ("metadata/lua/table.lua")
@@ -239,6 +281,8 @@ include ("metadata/lua/variable.lua")
 include ("metadata/lua/functionparameterlist.lua")
 include ("metadata/lua/tablenamespace.lua")
 include ("metadata/lua/classnamespace.lua")
+
+printTime("lua")
 
 -- Lua profiling
 GCompute.Profiling = {}
@@ -252,6 +296,8 @@ include ("profiling/perframetimedfunctionentry.lua")
 include ("profiling/profilingresultset.lua")
 include ("profiling/functionentry.lua")
 
+printTime("lua profiling")
+
 -- Other
 GCompute.Other = {}
 
@@ -261,9 +307,13 @@ include ("functioncalls/overloadedfunctionresolver.lua")
 include ("functioncalls/functioncall.lua")
 include ("functioncalls/memberfunctioncall.lua")
 
+printTime("runtime function calls")
+
 -- Runtime
 include ("compilercontext.lua")
 include ("executioncontext.lua")
+
+printTime("runtime")
 
 -- Languages
 include ("languagedetector.lua")
@@ -271,6 +321,8 @@ include ("languages.lua")
 include ("language.lua")
 include ("languages/glua.lua")
 include ("languages/lua.lua")
+
+printTime("languages")
 
 -- Runtime
 include ("astrunner.lua")
@@ -283,9 +335,13 @@ include ("runtime/thread.lua")
 
 include ("runtime/localprocesslist.lua")
 
+printTime("runtime")
+
 -- Native code emission
 include ("nativegen/icodeemitter.lua")
 include ("nativegen/luaemitter.lua")
+
+printTime("native code emission")
 
 -- Syntax coloring
 GCompute.SyntaxColoring = {}
@@ -293,9 +349,13 @@ include ("colorscheme.lua")
 include ("syntaxcoloring/syntaxcoloringscheme.lua")
 include ("syntaxcoloring/placeholdersyntaxcoloringscheme.lua")
 
+printTime("syntax coloring")
+
 -- GLua
 GCompute.GLua = {}
 include ("glua/luacompiler.lua")
+
+printTime("glua")
 
 -- GLua printing
 GCompute.GLua.Printing = {}
@@ -338,6 +398,8 @@ include ("glua/printing/textureprinter.lua")
 -- include ("glua/printing/convarprinter.lua")
 include ("glua/printing/defaultprinter.lua")
 
+printTime("glua printing")
+
 -- Services
 GCompute.Services = {}
 include ("returncode.lua")
@@ -345,6 +407,8 @@ include ("services/services.lua")
 include ("services/remoteserviceregistry.lua")
 include ("services/remoteservicemanagermanager.lua")
 include ("services/remoteservicemanager.lua")
+
+printTime("services")
 
 -- Execution
 GCompute.Execution = {}
@@ -387,6 +451,8 @@ include ("execution/executionfilterable.lua")
 
 include ("execution/executionlogger.lua")
 
+printTime("execution")
+
 GCompute.ExecutionLogger = GCompute.Execution.ExecutionLogger ()
 GCompute.ExecutionLogger:AddExecutionFilterable (GCompute.Execution.ExecutionFilterable)
 GCompute.ExecutionLogger:AddOutputTextSink (GCompute.Text.ConsoleTextSink)
@@ -416,6 +482,9 @@ GCompute.GlobalNamespace:ResolveNames (
 	)
 )
 
+printTime("core library")
+
 if CLIENT then
 	GCompute.IncludeDirectory ("gcompute/ui")
+    printTime("cl ui")
 end
