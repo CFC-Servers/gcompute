@@ -457,15 +457,21 @@ GCompute.ExecutionLogger = GCompute.Execution.ExecutionLogger ()
 GCompute.ExecutionLogger:AddExecutionFilterable (GCompute.Execution.ExecutionFilterable)
 GCompute.ExecutionLogger:AddOutputTextSink (GCompute.Text.ConsoleTextSink)
 
+printTime("execution logger")
+
 GCompute.AddReloadCommand ("gcompute/gcompute.lua", "gcompute", "GCompute")
 
 GCompute.PlayerMonitor = GCompute.PlayerMonitor ("GCompute")
 
+printTime("command & monitor")
+	
 -- Libraries
 GCompute.System = GCompute.Module ()
 	:SetName ("System")
 	:SetFullName ("System")
 	:SetOwnerId (GLib.GetSystemId ())
+
+printTime("system setup")
 
 GCompute.System:SetRootNamespace (GCompute.NamespaceDefinition ())
 
@@ -473,7 +479,11 @@ GCompute.GlobalNamespace = GCompute.System:GetRootNamespace ()
 GCompute.GlobalNamespace:SetGlobalNamespace (GCompute.GlobalNamespace)
 GCompute.GlobalNamespace:SetNamespaceType (GCompute.NamespaceType.Global)
 
+printTime("namespace setup")
+
 include ("corelibrary.lua")
+printTime("core library")
+
 GCompute.IncludeDirectory ("gcompute/libraries", true)
 GCompute.GlobalNamespace:ResolveNames (
 	GCompute.ObjectResolver (
@@ -482,7 +492,7 @@ GCompute.GlobalNamespace:ResolveNames (
 	)
 )
 
-printTime("core library")
+printTime("libraries")
 
 if CLIENT then
 	GCompute.IncludeDirectory ("gcompute/ui")
