@@ -21,7 +21,7 @@ else
 	"GComputeMonospace",
 	{
 		font   = "Lucida Console",
-		size   = 14,
+		size   = 18,
 		weight = 400
 	}
 )
@@ -29,7 +29,7 @@ else
 	"GComputeMonospaceBold",
 	{
 		font   = "Lucida Console",
-		size   = 14,
+		size   = 18,
 		weight = 1000
 	}
 )
