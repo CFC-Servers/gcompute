@@ -1,10 +1,18 @@
+local fontSize = CreateClientConVar(
+	"gcompute_default_fontsize", 
+	"14", 
+	true, 
+	false, 
+	"the font size for gcompute code/text, may require a rejoining/restarting to apply"
+)
+
 local PANEL = {}
 if system.IsLinux() then
 	surface.CreateFont (
 	"GComputeMonospace",
 	{
 		font   = "DejaVu Sans Mono",
-		size   = 14,
+		size   = fontSize:GetInt(),
 		weight = 400
 	}
 )
@@ -12,7 +20,7 @@ if system.IsLinux() then
 	"GComputeMonospaceBold",
 	{
 		font   = "DejaVu Sans Mono",
-		size   = 14,
+		size   = fontSize:GetInt(),
 		weight = 1000
 	}
 )
@@ -21,7 +29,7 @@ else
 	"GComputeMonospace",
 	{
 		font   = "Lucida Console",
-		size   = 18,
+		size   = fontSize:GetInt(),
 		weight = 400
 	}
 )
@@ -29,7 +37,7 @@ else
 	"GComputeMonospaceBold",
 	{
 		font   = "Lucida Console",
-		size   = 18,
+		size   = fontSize:GetInt(),
 		weight = 1000
 	}
 )
