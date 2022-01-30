@@ -1,9 +1,9 @@
 local fontSize = CreateClientConVar(
-	"gcompute_default_fontsize", 
-	"14", 
-	true, 
-	false, 
-	"the font size for gcompute code/text, may require a rejoining/restarting to apply"
+	"gcompute_default_fontsize",
+	"14",
+	true,
+	false,
+	"the font size for gcompute code/text, may require rejoining/restarting to apply"
 )
 
 local PANEL = {}
