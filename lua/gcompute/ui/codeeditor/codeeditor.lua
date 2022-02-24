@@ -3,8 +3,14 @@ local fontSize = CreateClientConVar(
 	"14",
 	true,
 	false,
-	"the font size for gcompute code/text, may require rejoining/restarting to apply"
+	"The font size for gcompute code/text"
 )
+
+local YELLOW = Color( 255, 255, 0 )
+cvars.AddChangeCallback( "font_size_reload", function()
+	MsgC( YELLOW, "\n! Default font size changed - Reloading Gcompute...\n" )
+	RunConsoleCommand( "gcompute_reload" )
+end )
 
 local PANEL = {}
 if system.IsLinux() then
