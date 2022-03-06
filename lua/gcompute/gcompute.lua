@@ -270,7 +270,6 @@ include ("languagedetector.lua")
 include ("languages.lua")
 include ("language.lua")
 include ("languages/glua.lua")
-include ("languages/lua.lua")
 
 -- Runtime
 include ("astrunner.lua")
