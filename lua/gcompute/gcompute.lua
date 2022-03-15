@@ -413,6 +413,6 @@ GCompute.GlobalNamespace:ResolveNames (
 	)
 )
 
-if CLIENT then
+if CLIENT and GetConVar("is_gcompute_user"):GetBool() then
 	GCompute.IncludeDirectory ("gcompute/ui")
 end
