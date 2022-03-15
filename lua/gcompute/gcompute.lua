@@ -393,26 +393,31 @@ GCompute.AddReloadCommand ("gcompute/gcompute.lua", "gcompute", "GCompute")
 GCompute.PlayerMonitor = GCompute.PlayerMonitor ("GCompute")
 
 -- Libraries
-GCompute.System = GCompute.Module ()
-	:SetName ("System")
-	:SetFullName ("System")
-	:SetOwnerId (GLib.GetSystemId ())
+local function loadLibs()
+    GCompute.System = GCompute.Module ()
+        :SetName ("System")
+        :SetFullName ("System")
+        :SetOwnerId (GLib.GetSystemId ())
 
-GCompute.System:SetRootNamespace (GCompute.NamespaceDefinition ())
+    GCompute.System:SetRootNamespace (GCompute.NamespaceDefinition ())
 
-GCompute.GlobalNamespace = GCompute.System:GetRootNamespace ()
-GCompute.GlobalNamespace:SetGlobalNamespace (GCompute.GlobalNamespace)
-GCompute.GlobalNamespace:SetNamespaceType (GCompute.NamespaceType.Global)
+    GCompute.GlobalNamespace = GCompute.System:GetRootNamespace ()
+    GCompute.GlobalNamespace:SetGlobalNamespace (GCompute.GlobalNamespace)
+    GCompute.GlobalNamespace:SetNamespaceType (GCompute.NamespaceType.Global)
 
-include ("corelibrary.lua")
-GCompute.IncludeDirectory ("gcompute/libraries", true)
-GCompute.GlobalNamespace:ResolveNames (
-	GCompute.ObjectResolver (
-		GCompute.NamespaceSet ()
-			:AddNamespace (GCompute.GlobalNamespace)
-	)
-)
+    include ("corelibrary.lua")
+    GCompute.IncludeDirectory ("gcompute/libraries", true)
+    GCompute.GlobalNamespace:ResolveNames (
+        GCompute.ObjectResolver (
+            GCompute.NamespaceSet ()
+                :AddNamespace (GCompute.GlobalNamespace)
+        )
+    )
+end
+
+if SERVER then loadLibs() end
 
 if CLIENT and GetConVar("is_gcompute_user"):GetBool() then
+    loadLibs()
 	GCompute.IncludeDirectory ("gcompute/ui")
 end
