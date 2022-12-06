@@ -443,11 +443,7 @@ local function loadNextChunk()
 		return
 	end
 
-	local chunk = includeBatches[i]
-
-	local startTime = SysTime()
-	chunk()
-	print( "Loaded GCompute chunk " .. i .. " in " .. (SysTime() - startTime) .. " seconds" )
+	includeBatches[i]()
 
 	timer.Simple( engine.TickInterval() * 5, function()
 		GLib.CallDelayed( loadNextChunk )
