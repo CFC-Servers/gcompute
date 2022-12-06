@@ -1,3 +1,6 @@
+local SysTime = SysTime
+local print = print
+
 include ("ide.lua")
 if GCompute.CodeEditor then return end
 GCompute.CodeEditor = {}
@@ -38,11 +41,11 @@ include ("codeeditor/codecompletion/suggestiontype.lua")
 
 -- Keyboard Shortcuts
 GCompute.CodeEditor.KeyboardMap = Gooey.KeyboardMap ()
-GCompute.IncludeDirectory ("gcompute/ui/codeeditor/keyboardmap")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/codeeditor/keyboardmap")
 
 -- Actions
 GCompute.CodeEditor.ActionMap = Gooey.ActionMap ()
-GCompute.IncludeDirectory ("gcompute/ui/codeeditor/actions")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/codeeditor/actions")
 
 -- Undo / Redo
 include ("codeeditor/undoredo/blockdeletionaction.lua")

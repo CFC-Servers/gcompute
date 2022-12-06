@@ -88,7 +88,7 @@ function self:PrintMultiline (printer, coloredTextSink, obj, printingOptions, al
 			end
 		)
 		
-		local maxKeyIndex = math.min (500, #sortedKeys)
+		local maxKeyIndex = math.min (1250, #sortedKeys)
 		local maxKeyLength = 0
 		local maxBracketedKeyLength = 0
 		

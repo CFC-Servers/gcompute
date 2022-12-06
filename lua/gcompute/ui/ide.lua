@@ -45,12 +45,12 @@ include ("ide/undoredostackproxy.lua")
 
 -- Keyboard Shortcuts and Plugins
 GCompute.IDE.KeyboardMap = Gooey.KeyboardMap ()
-GCompute.IncludeDirectory ("gcompute/ui/ide/keyboardmap")
-GCompute.IncludeDirectory ("gcompute/ui/ide/plugins")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/ide/keyboardmap")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/ide/plugins")
 
 -- Actions
 GCompute.IDE.ActionMap = Gooey.ActionMap ()
-GCompute.IncludeDirectory ("gcompute/ui/ide/actions")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/ide/actions")
 
 -- Notification Bars
 include ("ide/notificationbars/notificationbar.lua")
