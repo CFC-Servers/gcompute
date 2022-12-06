@@ -435,19 +435,7 @@ local function after()
 	end
 end
 
-local i = 0
-local function loadNextChunk()
-	i = i + 1
-	if i > #includeBatches then
-		after()
-		return
-	end
-
-	includeBatches[i]()
-
-	timer.Simple( engine.TickInterval() * 5, function()
-		GLib.CallDelayed( loadNextChunk )
-	end )
+for _, batch in ipairs(includeBatches) do
+	GLib.CallDelayed( batch )
 end
-
-loadNextChunk()
+GLib.CallDelayed(after)
