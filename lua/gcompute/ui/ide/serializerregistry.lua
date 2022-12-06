@@ -72,4 +72,4 @@ end
 
 GCompute.IDE.SerializerRegistry = GCompute.IDE.SerializerRegistry ()
 
-GCompute.IncludeDirectory ("gcompute/ui/ide/serializers")
+GCompute.IncludeDirectoryAsync ("gcompute/ui/ide/serializers", false)

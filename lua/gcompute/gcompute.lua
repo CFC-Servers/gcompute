@@ -1,3 +1,5 @@
+local SysTime = SysTime
+
 if GCompute then return end
 GCompute = GCompute or {}
 
@@ -45,379 +47,411 @@ function GCompute.ToFunction (f)
 	return f
 end
 
-include ("callbackchain.lua")
-include ("compilermessagetype.lua")
-include ("icompilermessagesink.lua")
-include ("nullcompilermessagesink.lua")
-include ("ieditorhelper.lua")
-include ("iobject.lua")
-include ("isavable.lua")
-
-include ("substitutionmap.lua")
-
--- Text
-GCompute.Text = {}
-include ("text/itextsink.lua")
-include ("text/itextsource.lua")
-include ("text/icoloredtextsink.lua")
-include ("text/icoloredtextsource.lua")
-include ("text/nullcoloredtextsink.lua")
-
-include ("text/consoletextsink.lua")
-include ("text/coloredtextbuffer.lua")
-include ("text/pipe.lua")
-include ("text/nullpipe.lua")
-
--- Interop
-include ("interop/epoe.lua")
-include ("interop/aowl.lua")
-
--- Syntax trees
-include ("astnode.lua")
-include ("ast.lua")
-
--- Visitors
-include ("visitor.lua")
-include ("astvisitor.lua")
-include ("namespacevisitor.lua")
-
--- Compilation
-include ("compiler/compilationgroup.lua")
-include ("compiler/compilationunit.lua")
-
--- Regex
-include ("regex/regex.lua")
-
--- Lexing
-GCompute.Lexing = {}
-include ("lexer/keywordtype.lua")
-include ("lexer/tokentype.lua")
-include ("lexer/symbolmatchtype.lua")
-
-include ("lexer/ikeywordclassifier.lua")
-include ("lexer/keywordclassifier.lua")
-include ("lexer/token.lua")
-include ("lexer/itokenizer.lua")
-include ("lexer/tokenizer.lua")
-
--- TODO: Fix the lexer mess
-include ("lexer/ilexer.lua")
-include ("lexer/lexer.lua")
-include ("lexer/itokenstream.lua")          -- This is stupid, it should be an optional buffer.
-include ("lexer/tokenstream.lua")           -- This is stupid by extension.
-include ("lexer/linkedlisttokenstream.lua") -- This too.
-include ("lexer/lexertokenstream.lua")      -- And this.
-
--- Compiler output
-include ("compiler/compilermessage.lua")
-include ("compiler/compilermessagecollection.lua")
-include ("compiler/compilermessagetype.lua")
-
--- Compiler passes
-include ("compiler/compilerpasstype.lua")
-
-include ("compiler/preprocessor.lua")
-include ("compiler/parserjobgenerator.lua")
-include ("compiler/parser.lua")
-include ("compiler/blockstatementinserter.lua")
-include ("compiler/namespacebuilder.lua")
-include ("compiler/uniquenameassigner.lua")
-include ("compiler/aliasresolver.lua")
-include ("compiler/simplenameresolver.lua")
-include ("compiler/typeinferer.lua")
-include ("compiler/typeinferer_typeassigner.lua")
-include ("compiler/localscopemerger.lua")
-
-include ("namespaceset.lua")
-include ("uniquenamemap.lua")
-
-include ("assignmenttype.lua")
-include ("assignmentplan.lua")
-include ("variablereadtype.lua")
-include ("variablereadplan.lua")
-
--- Source files
-include ("sourcefilecache.lua")
-include ("sourcefile.lua")
-
--- Type system
-include ("type/typesystem.lua")
-
-include ("type/typeconversionmethod.lua")
-include ("type/typeparser.lua")
-include ("type/type.lua")
-
-include ("type/errortype.lua")
-
-include ("type/aliasedtype.lua")
--- include ("type/arraytype.lua")
-include ("type/classtype.lua")
--- include ("type/enumtype.lua")
-include ("type/functiontype.lua")
-include ("type/typeparametertype.lua")
-
--- TODO: Remove these
--- include ("type/arraytype.lua")
--- include ("type/instancedtype.lua")
--- include ("type/parametrictype.lua")
-include ("type/referencetype.lua")
-
--- Type inference
-include ("type/inferredtype.lua")
-
--- Object resolution
-include ("objectresolution/resolutionobjecttype.lua")
-include ("objectresolution/resolutionresulttype.lua")
-include ("objectresolution/resolutionresult.lua")
-include ("objectresolution/resolutionresults.lua")
-include ("objectresolution/deferredobjectresolution.lua")
-include ("objectresolution/objectresolver.lua")
-
--- Compile time and reflection
-include ("metadata/namespacetype.lua")
-include ("metadata/membervisibility.lua")
-
-include ("metadata/module.lua")
-
-include ("metadata/usingdirective.lua")
-include ("metadata/usingcollection.lua")
-
-include ("metadata/objectdefinition.lua")
-include ("metadata/namespace.lua")
-include ("metadata/classnamespace.lua")
-
-include ("metadata/namespacedefinition.lua")
-include ("metadata/classdefinition.lua")
-
-include ("metadata/aliasdefinition.lua")
-include ("metadata/eventdefinition.lua")
-include ("metadata/propertydefinition.lua")
-include ("metadata/typeparameterdefinition.lua")
-include ("metadata/variabledefinition.lua")
-
-include ("metadata/methoddefinition.lua")
-include ("metadata/constructordefinition.lua")
-include ("metadata/explicitcastdefinition.lua")
-include ("metadata/implicitcastdefinition.lua")
-include ("metadata/propertyaccessordefinition.lua")
-
-include ("metadata/overloadedclassdefinition.lua")
-include ("metadata/overloadedmethoddefinition.lua")
-
-include ("metadata/typecurriedclassdefinition.lua")
-include ("metadata/typecurriedmethoddefinition.lua")
-
--- Mirror
-include ("metadata/mirror/mirrornamespace.lua")
-
-include ("metadata/mirror/mirrornamespacedefinition.lua")
-include ("metadata/mirror/mirrorclassdefinition.lua")
--- include ("metadata/mirror/mirrormethoddefinition.lua")
-include ("metadata/mirror/mirroroverloadedclassdefinition.lua")
-include ("metadata/mirror/mirroroverloadedmethoddefinition.lua")
-
--- Parameters and arguments
-include ("metadata/parameterlist.lua")
-GCompute.EmptyParameterList = GCompute.ParameterList ()
-
-include ("metadata/typeparameterlist.lua")
-include ("metadata/typeargumentlist.lua")
-include ("metadata/typeargumentlistlist.lua")
-include ("metadata/emptytypeparameterlist.lua")
-include ("metadata/emptytypeargumentlist.lua")
-
-include ("metadata/mergedlocalscope.lua")
-
--- Lua
-GCompute.Lua = {}
-include ("metadata/lua/table.lua")
-include ("metadata/lua/class.lua")
-include ("metadata/lua/function.lua")
-include ("metadata/lua/constructor.lua")
-include ("metadata/lua/variable.lua")
-
-include ("metadata/lua/functionparameterlist.lua")
-include ("metadata/lua/tablenamespace.lua")
-include ("metadata/lua/classnamespace.lua")
-
--- Lua profiling
-GCompute.Profiling = {}
-include ("profiling/profiler.lua")
-include ("profiling/samplingprofiler.lua")
-include ("profiling/instrumentingprofiler.lua")
-include ("profiling/functionentry.lua")
-include ("profiling/samplingfunctionentry.lua")
-include ("profiling/timedfunctionentry.lua")
-include ("profiling/perframetimedfunctionentry.lua")
-include ("profiling/profilingresultset.lua")
-include ("profiling/functionentry.lua")
-
--- Other
-GCompute.Other = {}
-
--- Runtime function calls
-include ("functioncalls/functionresolutiontype.lua")
-include ("functioncalls/overloadedfunctionresolver.lua")
-include ("functioncalls/functioncall.lua")
-include ("functioncalls/memberfunctioncall.lua")
-
--- Runtime
-include ("compilercontext.lua")
-include ("executioncontext.lua")
-
--- Languages
-include ("languagedetector.lua")
-include ("languages.lua")
-include ("language.lua")
-include ("languages/glua.lua")
-
--- Runtime
-include ("astrunner.lua")
-
-include ("runtime/runtimeobject.lua")
-
-include ("runtime/processlist.lua")
-include ("runtime/process.lua")
-include ("runtime/thread.lua")
-
-include ("runtime/localprocesslist.lua")
-
--- Native code emission
-include ("nativegen/icodeemitter.lua")
-include ("nativegen/luaemitter.lua")
-
--- Syntax coloring
-GCompute.SyntaxColoring = {}
-include ("colorscheme.lua")
-include ("syntaxcoloring/syntaxcoloringscheme.lua")
-include ("syntaxcoloring/placeholdersyntaxcoloringscheme.lua")
-
--- GLua
-GCompute.GLua = {}
-include ("glua/luacompiler.lua")
-
--- GLua printing
-GCompute.GLua.Printing = {}
-include ("glua/printing/alignmentcontroller.lua")
-include ("glua/printing/nullalignmentcontroller.lua")
-include ("glua/printing/printingoptions.lua")
-include ("glua/printing/printer.lua")
-include ("glua/printing/typeprinter.lua")
-include ("glua/printing/referencetypeprinter.lua")
-include ("glua/printing/defaulttypeprinter.lua")
-
-include ("glua/printing/nilprinter.lua")
-include ("glua/printing/booleanprinter.lua")
-include ("glua/printing/numberprinter.lua")
-include ("glua/printing/stringprinter.lua")
-include ("glua/printing/functionprinter.lua")
-include ("glua/printing/tableprinter.lua")
-
-include ("glua/printing/colorprinter.lua")
-include ("glua/printing/angleprinter.lua")
-include ("glua/printing/vectorprinter.lua")
--- include ("glua/printing/vmatrixprinter.lua")
-
-include ("glua/printing/entityprinter.lua")
-include ("glua/printing/playerprinter.lua")
-include ("glua/printing/panelprinter.lua")
--- include ("glua/printing/physobjprinter.lua")
-
--- include ("glua/printing/igmodaudiochannelprinter.lua")
-include ("glua/printing/soundpatchprinter.lua")
-
--- include ("glua/printing/materialprinter.lua")
-include ("glua/printing/meshprinter.lua")
-include ("glua/printing/textureprinter.lua")
-
--- include ("glua/printing/cusercmdprinter.lua")
--- include ("glua/printing/cmovedataprinter.lua")
--- include ("glua/printing/ctakedamageinfoprinter.lua")
--- include ("glua/printing/csoundpatchprinter.lua")
--- include ("glua/printing/convarprinter.lua")
-include ("glua/printing/defaultprinter.lua")
-
--- Services
-GCompute.Services = {}
-include ("returncode.lua")
-include ("services/services.lua")
-include ("services/remoteserviceregistry.lua")
-include ("services/remoteservicemanagermanager.lua")
-include ("services/remoteservicemanager.lua")
-
--- Execution
-GCompute.Execution = {}
-include ("execution/iexecutionservice.lua")
-include ("execution/iexecutioncontext.lua")
-include ("execution/iexecutioninstance.lua")
-include ("execution/executioncontext.lua")
-include ("execution/executioncontextoptions.lua")
-include ("execution/executioninstanceoptions.lua")
-include ("execution/executioninstancestate.lua")
-include ("execution/aggregateexecutionservice.lua")
-include ("execution/aggregateexecutioncontext.lua")
-include ("execution/aggregateexecutioninstance.lua")
-include ("execution/local/localexecutionservice.lua")
-include ("execution/local/localexecutioncontext.lua")
-include ("execution/local/localexecutioninstance.lua")
-include ("execution/local/consoleexecutioncontext.lua")
-include ("execution/local/consoleexecutioninstance.lua")
-include ("execution/local/gluaexecutioncontext.lua")
-include ("execution/local/gluaexecutioninstance.lua")
-include ("execution/remote/remoteexecutionservice.lua")
-include ("execution/remote/gcomputeremoteexecutionservice.lua")
-include ("execution/remote/remoteexecutionservicehost.lua")
-include ("execution/remote/remoteexecutionserviceclient.lua")
-include ("execution/remote/remoteexecutioncontexthost.lua")
-include ("execution/remote/remoteexecutioncontextclient.lua")
-include ("execution/remote/remoteexecutioninstancehost.lua")
-include ("execution/remote/remoteexecutioninstanceclient.lua")
-include ("execution/luadev/luadevexecutionservice.lua")
-include ("execution/luadev/luadevexecutioncontext.lua")
-include ("execution/luadev/luadevexecutioninstance.lua")
-
-include ("execution/iexecutionfilterable.lua")
-include ("execution/executionserviceexecutionfilterable.lua")
-
-include ("execution/executionservice.lua")
-include ("execution/executionfilterable.lua")
-
-include ("execution/executionlogger.lua")
-
-GCompute.ExecutionLogger = GCompute.Execution.ExecutionLogger ()
-GCompute.ExecutionLogger:AddExecutionFilterable (GCompute.Execution.ExecutionFilterable)
-GCompute.ExecutionLogger:AddOutputTextSink (GCompute.Text.ConsoleTextSink)
-
-GCompute.AddReloadCommand ("gcompute/gcompute.lua", "gcompute", "GCompute")
-
-GCompute.PlayerMonitor = GCompute.PlayerMonitor ("GCompute")
+local includeBatches = {
+	function()
+		-- Meta
+		include ("gcompute/callbackchain.lua")
+		include ("gcompute/compilermessagetype.lua")
+		include ("gcompute/icompilermessagesink.lua")
+		include ("gcompute/nullcompilermessagesink.lua")
+		include ("gcompute/ieditorhelper.lua")
+		include ("gcompute/iobject.lua")
+		include ("gcompute/isavable.lua")
+
+		include ("gcompute/substitutionmap.lua")
+	end,
+
+	function()
+		-- Text
+		GCompute.Text = {}
+		include ("gcompute/text/itextsink.lua")
+		include ("gcompute/text/itextsource.lua")
+		include ("gcompute/text/icoloredtextsink.lua")
+		include ("gcompute/text/icoloredtextsource.lua")
+		include ("gcompute/text/nullcoloredtextsink.lua")
+
+		include ("gcompute/text/consoletextsink.lua")
+		include ("gcompute/text/coloredtextbuffer.lua")
+		include ("gcompute/text/pipe.lua")
+		include ("gcompute/text/nullpipe.lua")
+	end,
+
+	function()
+		-- Syntax trees
+		include ("gcompute/astnode.lua")
+		include ("gcompute/ast.lua")
+	end,
+
+	function()
+		-- Visitors
+		include ("gcompute/visitor.lua")
+		include ("gcompute/astvisitor.lua")
+		include ("gcompute/namespacevisitor.lua")
+	end,
+
+	function()
+		-- Compilation
+		include ("gcompute/compiler/compilationgroup.lua")
+		include ("gcompute/compiler/compilationunit.lua")
+
+		-- Regex
+		include ("gcompute/regex/regex.lua")
+	end,
+
+	function()
+		-- Lexing
+		GCompute.Lexing = {}
+		include ("gcompute/lexer/keywordtype.lua")
+		include ("gcompute/lexer/tokentype.lua")
+		include ("gcompute/lexer/symbolmatchtype.lua")
+
+		include ("gcompute/lexer/ikeywordclassifier.lua")
+		include ("gcompute/lexer/keywordclassifier.lua")
+		include ("gcompute/lexer/token.lua")
+		include ("gcompute/lexer/itokenizer.lua")
+		include ("gcompute/lexer/tokenizer.lua")
+
+		-- TODO: Fix the lexer mess
+		include ("gcompute/lexer/ilexer.lua")
+		include ("gcompute/lexer/lexer.lua")
+		include ("gcompute/lexer/itokenstream.lua")          -- This is stupid, it should be an optional buffer.
+		include ("gcompute/lexer/tokenstream.lua")           -- This is stupid by extension.
+		include ("gcompute/lexer/linkedlisttokenstream.lua") -- This too.
+		include ("gcompute/lexer/lexertokenstream.lua")      -- And this.
+	end,
+
+	function()
+		-- Compiler output
+		include ("gcompute/compiler/compilermessage.lua")
+		include ("gcompute/compiler/compilermessagecollection.lua")
+		include ("gcompute/compiler/compilermessagetype.lua")
+
+		-- Compiler passes
+		include ("gcompute/compiler/compilerpasstype.lua")
+
+		include ("gcompute/compiler/preprocessor.lua")
+		include ("gcompute/compiler/parserjobgenerator.lua")
+		include ("gcompute/compiler/parser.lua")
+		include ("gcompute/compiler/blockstatementinserter.lua")
+		include ("gcompute/compiler/namespacebuilder.lua")
+		include ("gcompute/compiler/uniquenameassigner.lua")
+		include ("gcompute/compiler/aliasresolver.lua")
+		include ("gcompute/compiler/simplenameresolver.lua")
+		include ("gcompute/compiler/typeinferer.lua")
+		include ("gcompute/compiler/typeinferer_typeassigner.lua")
+		include ("gcompute/compiler/localscopemerger.lua")
+
+		include ("gcompute/namespaceset.lua")
+		include ("gcompute/uniquenamemap.lua")
+
+		include ("gcompute/assignmenttype.lua")
+		include ("gcompute/assignmentplan.lua")
+		include ("gcompute/variablereadtype.lua")
+		include ("gcompute/variablereadplan.lua")
+	end,
+
+	function()
+		-- Source files
+		include ("gcompute/sourcefilecache.lua")
+		include ("gcompute/sourcefile.lua")
+	end,
+
+	function()
+		-- Type system
+		include ("gcompute/type/typesystem.lua")
+
+		include ("gcompute/type/typeconversionmethod.lua")
+		include ("gcompute/type/typeparser.lua")
+		include ("gcompute/type/type.lua")
+
+		include ("gcompute/type/errortype.lua")
+
+		include ("gcompute/type/aliasedtype.lua")
+		include ("gcompute/type/classtype.lua")
+		include ("gcompute/type/functiontype.lua")
+		include ("gcompute/type/typeparametertype.lua")
+		include ("gcompute/type/referencetype.lua")
+	end,
+
+	function()
+		-- Type inference
+		include ("gcompute/type/inferredtype.lua")
+
+		-- Object resolution
+		include ("gcompute/objectresolution/resolutionobjecttype.lua")
+		include ("gcompute/objectresolution/resolutionresulttype.lua")
+		include ("gcompute/objectresolution/resolutionresult.lua")
+		include ("gcompute/objectresolution/resolutionresults.lua")
+		include ("gcompute/objectresolution/deferredobjectresolution.lua")
+		include ("gcompute/objectresolution/objectresolver.lua")
+	end,
+
+	function()
+		-- Compile time and reflection
+		include ("gcompute/metadata/namespacetype.lua")
+		include ("gcompute/metadata/membervisibility.lua")
+
+		include ("gcompute/metadata/module.lua")
+
+		include ("gcompute/metadata/usingdirective.lua")
+		include ("gcompute/metadata/usingcollection.lua")
+
+		include ("gcompute/metadata/objectdefinition.lua")
+		include ("gcompute/metadata/namespace.lua")
+		include ("gcompute/metadata/classnamespace.lua")
+
+		include ("gcompute/metadata/namespacedefinition.lua")
+		include ("gcompute/metadata/classdefinition.lua")
+
+		include ("gcompute/metadata/aliasdefinition.lua")
+		include ("gcompute/metadata/eventdefinition.lua")
+		include ("gcompute/metadata/propertydefinition.lua")
+		include ("gcompute/metadata/typeparameterdefinition.lua")
+		include ("gcompute/metadata/variabledefinition.lua")
+
+		include ("gcompute/metadata/methoddefinition.lua")
+		include ("gcompute/metadata/constructordefinition.lua")
+		include ("gcompute/metadata/explicitcastdefinition.lua")
+		include ("gcompute/metadata/implicitcastdefinition.lua")
+		include ("gcompute/metadata/propertyaccessordefinition.lua")
+
+		include ("gcompute/metadata/overloadedclassdefinition.lua")
+		include ("gcompute/metadata/overloadedmethoddefinition.lua")
+
+		include ("gcompute/metadata/typecurriedclassdefinition.lua")
+		include ("gcompute/metadata/typecurriedmethoddefinition.lua")
+	end,
+
+	function()
+		-- Mirror
+		include ("gcompute/metadata/mirror/mirrornamespace.lua")
+
+		include ("gcompute/metadata/mirror/mirrornamespacedefinition.lua")
+		include ("gcompute/metadata/mirror/mirrorclassdefinition.lua")
+		include ("gcompute/metadata/mirror/mirroroverloadedclassdefinition.lua")
+		include ("gcompute/metadata/mirror/mirroroverloadedmethoddefinition.lua")
+
+		-- Parameters and arguments
+		include ("gcompute/metadata/parameterlist.lua")
+		GCompute.EmptyParameterList = GCompute.ParameterList ()
+
+		include ("gcompute/metadata/typeparameterlist.lua")
+		include ("gcompute/metadata/typeargumentlist.lua")
+		include ("gcompute/metadata/typeargumentlistlist.lua")
+		include ("gcompute/metadata/emptytypeparameterlist.lua")
+		include ("gcompute/metadata/emptytypeargumentlist.lua")
+
+		include ("gcompute/metadata/mergedlocalscope.lua")
+	end,
+
+	function()
+		-- Lua
+		GCompute.Lua = {}
+		include ("gcompute/metadata/lua/table.lua")
+		include ("gcompute/metadata/lua/class.lua")
+		include ("gcompute/metadata/lua/function.lua")
+		include ("gcompute/metadata/lua/constructor.lua")
+		include ("gcompute/metadata/lua/variable.lua")
+
+		include ("gcompute/metadata/lua/functionparameterlist.lua")
+		include ("gcompute/metadata/lua/tablenamespace.lua")
+		include ("gcompute/metadata/lua/classnamespace.lua")
+	end,
+
+	function()
+		-- Other
+		GCompute.Other = {}
+
+		-- Runtime function calls
+		include ("gcompute/functioncalls/functionresolutiontype.lua")
+		include ("gcompute/functioncalls/overloadedfunctionresolver.lua")
+		include ("gcompute/functioncalls/functioncall.lua")
+		include ("gcompute/functioncalls/memberfunctioncall.lua")
+
+		-- Runtime
+		include ("gcompute/compilercontext.lua")
+		include ("gcompute/executioncontext.lua")
+
+		-- Languages
+		include ("gcompute/languagedetector.lua")
+		include ("gcompute/languages.lua")
+		include ("gcompute/language.lua")
+		include ("gcompute/languages/glua.lua")
+
+		-- Runtime
+		include ("gcompute/astrunner.lua")
+
+		include ("gcompute/runtime/runtimeobject.lua")
+
+		include ("gcompute/runtime/processlist.lua")
+		include ("gcompute/runtime/process.lua")
+		include ("gcompute/runtime/thread.lua")
+
+		include ("gcompute/runtime/localprocesslist.lua")
+	end,
+
+	function()
+		-- Native code emission
+		include ("gcompute/nativegen/icodeemitter.lua")
+		include ("gcompute/nativegen/luaemitter.lua")
+
+		-- Syntax coloring
+		GCompute.SyntaxColoring = {}
+		include ("gcompute/colorscheme.lua")
+		include ("gcompute/syntaxcoloring/syntaxcoloringscheme.lua")
+		include ("gcompute/syntaxcoloring/placeholdersyntaxcoloringscheme.lua")
+	end,
+
+	function()
+		-- GLua
+		GCompute.GLua = {}
+		include ("gcompute/glua/luacompiler.lua")
+
+		-- GLua printing
+		GCompute.GLua.Printing = {}
+		include ("gcompute/glua/printing/alignmentcontroller.lua")
+		include ("gcompute/glua/printing/nullalignmentcontroller.lua")
+		include ("gcompute/glua/printing/printingoptions.lua")
+		include ("gcompute/glua/printing/printer.lua")
+		include ("gcompute/glua/printing/typeprinter.lua")
+		include ("gcompute/glua/printing/referencetypeprinter.lua")
+		include ("gcompute/glua/printing/defaulttypeprinter.lua")
+
+		include ("gcompute/glua/printing/nilprinter.lua")
+		include ("gcompute/glua/printing/booleanprinter.lua")
+		include ("gcompute/glua/printing/numberprinter.lua")
+		include ("gcompute/glua/printing/stringprinter.lua")
+		include ("gcompute/glua/printing/functionprinter.lua")
+		include ("gcompute/glua/printing/tableprinter.lua")
+
+		include ("gcompute/glua/printing/colorprinter.lua")
+		include ("gcompute/glua/printing/angleprinter.lua")
+		include ("gcompute/glua/printing/vectorprinter.lua")
+
+		include ("gcompute/glua/printing/entityprinter.lua")
+		include ("gcompute/glua/printing/playerprinter.lua")
+		include ("gcompute/glua/printing/panelprinter.lua")
+
+		include ("gcompute/glua/printing/soundpatchprinter.lua")
+
+		include ("gcompute/glua/printing/meshprinter.lua")
+		include ("gcompute/glua/printing/textureprinter.lua")
+
+		include ("gcompute/glua/printing/defaultprinter.lua")
+	end,
+
+	function()
+		-- Services
+		GCompute.Services = {}
+		include ("gcompute/returncode.lua")
+		include ("gcompute/services/services.lua")
+		include ("gcompute/services/remoteserviceregistry.lua")
+		include ("gcompute/services/remoteservicemanagermanager.lua")
+		include ("gcompute/services/remoteservicemanager.lua")
+	end,
+
+	function()
+		-- Execution
+		GCompute.Execution = {}
+		include ("gcompute/execution/iexecutionservice.lua")
+		include ("gcompute/execution/iexecutioncontext.lua")
+		include ("gcompute/execution/iexecutioninstance.lua")
+		include ("gcompute/execution/executioncontext.lua")
+		include ("gcompute/execution/executioncontextoptions.lua")
+		include ("gcompute/execution/executioninstanceoptions.lua")
+		include ("gcompute/execution/executioninstancestate.lua")
+		include ("gcompute/execution/aggregateexecutionservice.lua")
+		include ("gcompute/execution/aggregateexecutioncontext.lua")
+		include ("gcompute/execution/aggregateexecutioninstance.lua")
+		include ("gcompute/execution/local/localexecutionservice.lua")
+		include ("gcompute/execution/local/localexecutioncontext.lua")
+		include ("gcompute/execution/local/localexecutioninstance.lua")
+		include ("gcompute/execution/local/consoleexecutioncontext.lua")
+		include ("gcompute/execution/local/consoleexecutioninstance.lua")
+		include ("gcompute/execution/local/gluaexecutioncontext.lua")
+		include ("gcompute/execution/local/gluaexecutioninstance.lua")
+		include ("gcompute/execution/remote/remoteexecutionservice.lua")
+		include ("gcompute/execution/remote/gcomputeremoteexecutionservice.lua")
+		include ("gcompute/execution/remote/remoteexecutionservicehost.lua")
+		include ("gcompute/execution/remote/remoteexecutionserviceclient.lua")
+		include ("gcompute/execution/remote/remoteexecutioncontexthost.lua")
+		include ("gcompute/execution/remote/remoteexecutioncontextclient.lua")
+		include ("gcompute/execution/remote/remoteexecutioninstancehost.lua")
+		include ("gcompute/execution/remote/remoteexecutioninstanceclient.lua")
+		include ("gcompute/execution/luadev/luadevexecutionservice.lua")
+		include ("gcompute/execution/luadev/luadevexecutioncontext.lua")
+		include ("gcompute/execution/luadev/luadevexecutioninstance.lua")
+
+		include ("gcompute/execution/iexecutionfilterable.lua")
+		include ("gcompute/execution/executionserviceexecutionfilterable.lua")
+
+		include ("gcompute/execution/executionservice.lua")
+		include ("gcompute/execution/executionfilterable.lua")
+
+		include ("gcompute/execution/executionlogger.lua")
+	end,
+
+	function()
+		GCompute.ExecutionLogger = GCompute.Execution.ExecutionLogger ()
+		GCompute.ExecutionLogger:AddExecutionFilterable (GCompute.Execution.ExecutionFilterable)
+		GCompute.ExecutionLogger:AddOutputTextSink (GCompute.Text.ConsoleTextSink)
+
+		GCompute.AddReloadCommand ("gcompute/gcompute.lua", "gcompute", "GCompute")
+
+		GCompute.PlayerMonitor = GCompute.PlayerMonitor ("GCompute")
+	end
+}
 
 -- Libraries
 local function loadLibs()
-    GCompute.System = GCompute.Module ()
-        :SetName ("System")
-        :SetFullName ("System")
-        :SetOwnerId (GLib.GetSystemId ())
+	GCompute.System = GCompute.Module ()
+	:SetName ("System")
+	:SetFullName ("System")
+	:SetOwnerId (GLib.GetSystemId ())
 
-    GCompute.System:SetRootNamespace (GCompute.NamespaceDefinition ())
+	GCompute.System:SetRootNamespace (GCompute.NamespaceDefinition ())
 
-    GCompute.GlobalNamespace = GCompute.System:GetRootNamespace ()
-    GCompute.GlobalNamespace:SetGlobalNamespace (GCompute.GlobalNamespace)
-    GCompute.GlobalNamespace:SetNamespaceType (GCompute.NamespaceType.Global)
+	GCompute.GlobalNamespace = GCompute.System:GetRootNamespace ()
+	GCompute.GlobalNamespace:SetGlobalNamespace (GCompute.GlobalNamespace)
+	GCompute.GlobalNamespace:SetNamespaceType (GCompute.NamespaceType.Global)
 
-    include ("corelibrary.lua")
-    GCompute.IncludeDirectory ("gcompute/libraries", true)
-    GCompute.GlobalNamespace:ResolveNames (
-        GCompute.ObjectResolver (
-            GCompute.NamespaceSet ()
-                :AddNamespace (GCompute.GlobalNamespace)
-        )
-    )
+	include ("gcompute/corelibrary.lua")
+	GCompute.IncludeDirectoryAsync ("gcompute/libraries", true)
+	GCompute.GlobalNamespace:ResolveNames (
+	GCompute.ObjectResolver (
+	GCompute.NamespaceSet ()
+	:AddNamespace (GCompute.GlobalNamespace)
+	)
+	)
 end
 
-if SERVER then loadLibs() end
+local function after()
+	if SERVER then loadLibs() end
 
-if CLIENT and GetConVar("is_gcompute_user"):GetBool() then
-    loadLibs()
-	GCompute.IncludeDirectory ("gcompute/ui")
+	-- Only load the UI on gcompute-using clients
+	if CLIENT and GetConVar("is_gcompute_user"):GetBool() then
+		loadLibs() 
+		GCompute.IncludeDirectoryAsync ("gcompute/ui")
+	end
 end
+
+local i = 0
+local function loadNextChunk()
+	i = i + 1
+	if i > #includeBatches then
+		after()
+		return
+	end
+
+	local chunk = includeBatches[i]
+
+	local startTime = SysTime()
+	chunk()
+	print( "Loaded GCompute chunk " .. i .. " in " .. (SysTime() - startTime) .. " seconds" )
+
+	timer.Simple( engine.TickInterval() * 5, function()
+		GLib.CallDelayed( loadNextChunk )
+	end )
+end
+
+loadNextChunk()

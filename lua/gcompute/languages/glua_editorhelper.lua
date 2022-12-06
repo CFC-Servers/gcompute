@@ -6,15 +6,9 @@ function self:ctor (language)
 	self.LastStdOut = nil
 	self.LastStdErr = nil
 	
-	GCompute.EPOE:AddEventListener ("LineReceived", self:GetHashCode (),
-		function (_, lineData)
-			self:ProcessEPOELine (lineData)
-		end
-	)
 end
 
 function self:dtor ()
-	GCompute.EPOE:RemoveEventListener ("LineReceived", self:GetHashCode ())
 end
 
 function self:GetCommentFormat ()
@@ -183,19 +177,6 @@ function self:ShouldOutdent (codeEditor, location)
 	end
 	
 	return false
-end
-
--- Internal, do not call
-function self:ProcessEPOELine (lineData)
-	if not self.LastStdErr then return end
-	
-	local localSteamId = GLib.GetLocalId ():sub (string.len ("STEAM_") + 1)
-	if lineData.Text:find (localSteamId) then
-		for _, segmentData in ipairs (lineData) do
-			self.LastStdErr:WriteColor (segmentData.Text, segmentData.Color)
-		end
-		self.LastStdErr:WriteLine ("")
-	end
 end
 
 function self:ValidateCode (code, sourceId, stdOut, stdErr)
