@@ -6,6 +6,12 @@ local fontSize = CreateClientConVar(
 	"the font size for gcompute code/text, may require rejoining/restarting to apply"
 )
 
+local YELLOW = Color( 255, 255, 0 )
+cvars.AddChangeCallback( "gcompute_default_fontsize", function()
+	MsgC( YELLOW, "\n! Default font size changed - Reloading Gcompute...\n" )
+	RunConsoleCommand( "gcompute_reload" )
+end )
+
 local PANEL = {}
 if system.IsLinux() then
 	surface.CreateFont (
