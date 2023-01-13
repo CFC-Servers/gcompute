@@ -397,6 +397,7 @@ end
 
 concommand.Add ("gcompute_show_ide",
 	function ()
+		if not GLib.Loader.AllPacksLoaded then return end
 		GCompute.IDE.GetInstance ():SetVisible (true)
 	end
 )
