@@ -395,9 +395,29 @@ function self:UnhookView (view)
 	end
 end
 
+local ready = false
+local queued = false
+
+local function show()
+	GCompute.IDE.GetInstance ():SetVisible (true)
+end
+
 concommand.Add ("gcompute_show_ide",
 	function ()
+		-- Because glib stuff is loaded asynchronously, we put our vgui show call at the end of the glib queue
+		-- to ensure all of the packs have fully loaded
+		if queued then return end
 		if not GLib.Loader.AllPacksLoaded then return end
-		GCompute.IDE.GetInstance ():SetVisible (true)
+
+		if ready then return show() end
+
+		queued = true
+		print( "[GCompute] Opening... (This could take some time if GLib only just loaded all the packs)")
+
+		GLib.CallDelayed( function()
+			show()
+			ready = true
+			queued = false
+		end )
 	end
 )
