@@ -37,16 +37,16 @@ function self:GetNewLineIndentation (codeEditor, location)
 	if found then
 		if isRepeat then
 			if not string.find (beforeCaret, "[^_a-zA-Z0-9]until[^_a-zA-Z0-9]", endSearchStart) then
-				return baseIndentation .. "\t"
+				return baseIndentation .. "    "
 			end
 		else
 			if not string.find (beforeCaret, "[^_a-zA-Z0-9]end[^_a-zA-Z0-9]", endSearchStart) then
-				return baseIndentation .. "\t"
+				return baseIndentation .. "    "
 			end
 		end
 	end
 	if beforeCaret:find ("{[^}]*$") then
-		return baseIndentation .. "\t"
+		return baseIndentation .. "    "
 	end
 	return baseIndentation
 end
