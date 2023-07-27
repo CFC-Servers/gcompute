@@ -88,7 +88,7 @@ function self:AddSourceFile (code, sourceId)
 	if not sourceId then
 		ownerName = GCompute.PlayerMonitor:GetUserName (self:GetOwnerId ())
 		ownerName = ownerName or ""
-		sourceId = "[" .. self:GetOwnerId () .. "]" .. ownerName
+		sourceId = "[" .. self:GetOwnerId () .. "]" .. ownerName..".lua"
 	end
 	self.SourceFileCount = self.SourceFileCount + 1
 	self.SourceFiles [self.SourceFileCount] = code
