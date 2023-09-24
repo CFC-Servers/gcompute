@@ -694,6 +694,22 @@ function PANEL:DeleteSelection ()
 	self:GetUndoRedoStack ():Push (deletionAction)
 end
 
+function PANEL:DeleteLast ()
+	if not self.Selection:IsEmpty () then return end
+
+	-- Erase the previous character
+	deletionStart = self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer)
+	deletionEnd   = GCompute.CodeEditor.LineCharacterLocation (deletionStart)
+	deletionStart:SetCharacter (deletionStart:GetCharacter () - 1)
+
+	local selectionStartLocation = self.Document:ColumnToCharacter (self.Selection:GetSelectionStart (), self.TextRenderer)
+	local selectionEndLocation   = self.Document:ColumnToCharacter (self.Selection:GetSelectionEnd (),   self.TextRenderer)
+	local text = self.Document:GetText (deletionStart, deletionEnd)
+
+	local deletionAction = GCompute.CodeEditor.DeletionAction (self, selectionStartLocation, selectionEndLocation, deletionStart, deletionEnd, text)
+	deletionAction:Redo ()
+end
+
 function PANEL:GetText ()
 	return self.Document:GetText ()
 end
@@ -1517,6 +1533,7 @@ function PANEL:OnKeyCodeTyped (keyCode)
 	local ctrl    = input.IsKeyDown (KEY_LCONTROL) or input.IsKeyDown (KEY_RCONTROL)
 	local shift   = input.IsKeyDown (KEY_LSHIFT)   or input.IsKeyDown (KEY_RSHIFT)
 	local alt     = input.IsKeyDown (KEY_LALT)     or input.IsKeyDown (KEY_RALT)
+	local caps    = input.IsKeyDown (KEY_CAPSLOCK)
 	
 	if self:GetCodeCompletionProvider () and
 	   self:GetCodeCompletionProvider ():HandleKey (keyCode, ctrl, shift, alt) then
@@ -1525,13 +1542,13 @@ function PANEL:OnKeyCodeTyped (keyCode)
 	
 	if keyCode == KEY_TAB then
 		if not ctrl and not self:IsReadOnly () then
-			if shift then
+			if caps then
 				self:OutdentSelection ()
 			else
 				if self:IsSelectionMultiline () then
 					self:IndentSelection ()
 				else
-					self:ReplaceSelectionText ("\t")
+					self:ReplaceSelectionText ("    ")
 				end
 			end
 			return true
@@ -1553,8 +1570,16 @@ function PANEL:OnKeyCodeTyped (keyCode)
 		if ctrl and not shift and not alt then
 			self:SelectAll ()
 		end
+	elseif keyCode == KEY_BACKQUOTE then
+		if not ctrl then
+			timer.Simple( 0, function()
+				self:DeleteLast()
+			end )
+
+			return true
+		end
 	end
-	
+
 	self:DispatchKeyboardAction (keyCode, ctrl, shift, alt)
 	
 	if self:GetCodeCompletionProvider () then

@@ -11,6 +11,10 @@ GCompute.CodeEditor.KeyboardMap:Register ({ KEY_BACKSPACE, KEY_DELETE },
 				-- Selection deletion
 				deletionStart = self.Document:ColumnToCharacter (self.Selection:GetSelectionStart (), self.TextRenderer)
 				deletionEnd   = self.Document:ColumnToCharacter (self.Selection:GetSelectionEnd (),   self.TextRenderer)
+			elseif ctrl then
+				-- Erase the previous word
+				deletionStart = self.Document:GetPreviousWordBoundary (self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer))
+				deletionEnd   = self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer)
 			elseif self.CaretLocation:GetColumn () == 0 then
 				if self.CaretLocation:GetLine () == 0 then return end
 				
@@ -21,10 +25,6 @@ GCompute.CodeEditor.KeyboardMap:Register ({ KEY_BACKSPACE, KEY_DELETE },
 				deletionStart:SetCharacter (self.Document:GetLine (deletionStart:GetLine ()):GetLengthExcludingLineBreak ())
 				deletionEnd = GCompute.CodeEditor.LineCharacterLocation (deletionStart)
 				deletionEnd:SetCharacter (deletionEnd:GetCharacter () + 1)
-			elseif ctrl then
-				-- Erase the previous word
-				deletionStart = self.Document:GetPreviousWordBoundary (self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer))
-				deletionEnd   = self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer)
 			else
 				-- Erase the previous character
 				deletionStart = self.Document:ColumnToCharacter (self.CaretLocation, self.TextRenderer)

@@ -21,7 +21,7 @@ function self:Redo ()
 	
 	for i = startLine, endLine do
 		insertionLocation:SetLine (i)
-		self.CodeEditor.Document:InsertWithinLine (insertionLocation, "\t")
+		self.CodeEditor.Document:InsertWithinLine (insertionLocation, "    ")
 	end
 	
 	self.CodeEditor:SetSelectionStart (self.SelectionSnapshot:GetSelectionStart ():AddColumns (self.TabWidth))
