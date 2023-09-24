@@ -1,4 +1,5 @@
 local self, info = GCompute.IDE.SerializerRegistry:CreateType ("Code")
+info:SetDocumentType ("CodeDocument")
 info:AddExtension ("txt")
 info:AddExtension ("lua")
 info:SetCanDeserialize (true)
