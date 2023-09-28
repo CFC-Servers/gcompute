@@ -1571,7 +1571,7 @@ function PANEL:OnKeyCodeTyped (keyCode)
 			self:SelectAll ()
 		end
 	elseif keyCode == KEY_BACKQUOTE then
-		if not ctrl then
+		if not shift then
 			timer.Simple( 0, function()
 				self:DeleteLast()
 			end )
