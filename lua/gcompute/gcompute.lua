@@ -1,12 +1,12 @@
 if GCompute then return end
 GCompute = GCompute or {}
 
-local t = GLib.LoadTimer
-
 if not _G.GLib then
 	include ("glib/glib.lua")
-	t.step ("GLib")
+	GLib.Debug ("Loading GLib in GCompute")
 end
+
+local t = GLib.LoadTimer
 
 if not _G.Gooey then
 	include ("gooey/gooey.lua")
