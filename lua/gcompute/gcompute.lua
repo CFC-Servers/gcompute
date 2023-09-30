@@ -1,11 +1,22 @@
-local SysTime = SysTime
-
 if GCompute then return end
 GCompute = GCompute or {}
 
-include ("glib/glib.lua")
-include ("gooey/gooey.lua")
-include ("vfs/vfs.lua")
+local t = GLib.LoadTimer
+
+if not _G.GLib then
+	include ("glib/glib.lua")
+	t.step ("GLib")
+end
+
+if not _G.Gooey then
+	include ("gooey/gooey.lua")
+	t.step ("Gooey")
+end
+
+if not _G.VFS then
+	include ("vfs/vfs.lua")
+	t.step ("VFS")
+end
 
 GLib.Initialize ("GCompute", GCompute)
 GLib.AddCSLuaPackSystem ("GCompute")
@@ -15,6 +26,8 @@ GLib.AddCSLuaPackFolderRecursive ("gcompute")
 GCompute.Reflection = GCompute.Reflection or {}
 
 GCompute.GlobalNamespace = nil
+
+t.step ("Init")
 
 function GCompute.ClearDebug ()
 end
@@ -95,7 +108,7 @@ local includeBatches = {
 		include ("gcompute/compiler/compilationunit.lua")
 
 		-- Regex
-		include ("gcompute/regex/regex.lua")
+		-- include ("gcompute/regex/regex.lua")
 	end,
 
 	function()
@@ -425,6 +438,7 @@ local function loadLibs()
 	)
 end
 
+
 local function after()
 	if SERVER then loadLibs() end
 
@@ -435,7 +449,14 @@ local function after()
 	end
 end
 
+t.step ("Step 1")
+
 for _, batch in ipairs(includeBatches) do
 	GLib.CallDelayed( batch )
 end
+
+t.step ("Step 2")
+
 GLib.CallDelayed(after)
+
+t.step ("Step 3")
