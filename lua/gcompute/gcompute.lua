@@ -6,7 +6,7 @@ if not _G.GLib then
 	GLib.Debug ("Loading GLib in GCompute")
 end
 
-local t = GLib.LoadTimer
+local t = GLib.LoadTimer ("GCompute")
 
 if not _G.Gooey then
 	include ("gooey/gooey.lua")
