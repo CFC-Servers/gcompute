@@ -208,11 +208,6 @@ function self:ctor (container)
 		end
 	)
 	
-	local icons =
-	{
-		["Console"]           = "icon16/application_xp_terminal.png",
-		["Terminal Emulator"] = "icon16/application_xp_terminal.png"
-	}
 	local lastLanguageExists = nil
 	for language in GCompute.Execution.ExecutionService:GetLanguageEnumerator () do
 		local languageExists = GCompute.Languages.Get (language) ~= nil
