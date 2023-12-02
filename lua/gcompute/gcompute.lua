@@ -379,8 +379,6 @@ local includeBatches = {
 		include ("gcompute/execution/local/localexecutionservice.lua")
 		include ("gcompute/execution/local/localexecutioncontext.lua")
 		include ("gcompute/execution/local/localexecutioninstance.lua")
-		include ("gcompute/execution/local/consoleexecutioncontext.lua")
-		include ("gcompute/execution/local/consoleexecutioninstance.lua")
 		include ("gcompute/execution/local/gluaexecutioncontext.lua")
 		include ("gcompute/execution/local/gluaexecutioninstance.lua")
 		include ("gcompute/execution/remote/remoteexecutionservice.lua")
@@ -391,9 +389,6 @@ local includeBatches = {
 		include ("gcompute/execution/remote/remoteexecutioncontextclient.lua")
 		include ("gcompute/execution/remote/remoteexecutioninstancehost.lua")
 		include ("gcompute/execution/remote/remoteexecutioninstanceclient.lua")
-		include ("gcompute/execution/luadev/luadevexecutionservice.lua")
-		include ("gcompute/execution/luadev/luadevexecutioncontext.lua")
-		include ("gcompute/execution/luadev/luadevexecutioninstance.lua")
 
 		include ("gcompute/execution/iexecutionfilterable.lua")
 		include ("gcompute/execution/executionserviceexecutionfilterable.lua")
