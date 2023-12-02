@@ -28,25 +28,17 @@ function self:CanCreateExecutionContext (authId, hostId, languageName)
 	   (not GCompute.PlayerMonitor:GetUserEntity (authId) or not GCompute.PlayerMonitor:GetUserEntity (authId):IsSuperAdmin ()) then
 		return false, GCompute.ReturnCode.AccessDenied
 	end
-	
+
 	-- Check host
 	if hostId ~= GLib.GetLocalId () then
 		return false, GCompute.ReturnCode.NotSupported
 	end
 
-	-- Check for server side only language
-	if CLIENT and languageName and languageName == "SQLite" then
-		return false, GCompute.ReturnCode.NotSupported
-	end
-	
 	-- Check languages
-	if languageName and
-	   languageName ~= "Console" and
-	   languageName ~= "Terminal Emulator" and
-	   not GCompute.Languages.Get (languageName) then
+	if languageName and not GCompute.Languages.Get (languageName) then
 		return false, GCompute.ReturnCode.NotSupported
 	end
-	
+
 	-- sv_allowcslua
 	if CLIENT and
 	   authId == GLib.GetLocalId () and
@@ -67,24 +59,18 @@ function self:CreateExecutionContext (authId, hostId, languageName, contextOptio
 	
 	-- Create the execution context
 	local executionContext
-	
-	if languageName == "Console" then
-		executionContext, returnCode = GCompute.Execution.ConsoleExecutionContext (authId, languageName, contextOptions), GCompute.ReturnCode.Success
-	-- elseif languageName == "Terminal Emulator" then
-	-- 	executionContext, returnCode = GCompute.Execution.TerminalEmulatorExecutionContext (authId, languageName, contextOptions), GCompute.ReturnCode.Success
-	elseif languageName == "GLua" then
+
+	if languageName == "GLua" then
 		executionContext, returnCode = GCompute.Execution.GLuaExecutionContext (authId, languageName, contextOptions), GCompute.ReturnCode.Success
-	elseif languageName == "SQLite" then
-		executionContext, returnCode = GCompute.Execution.SQLiteExecutionContext (authId, languageName, contextOptions), GCompute.ReturnCode.Success
 	else
 		returnCode = GCompute.ReturnCode.NotSupported
 	end
-	
+
 	-- ExecutionContextCreated event
 	if executionContext then
 		self:DispatchEvent ("ExecutionContextCreated", executionContext)
 	end
-	
+
 	return executionContext, returnCode
 end
 
@@ -92,11 +78,6 @@ function self:GetHostEnumerator ()
 	return GLib.SingleValueEnumerator (GLib.GetLocalId ())
 end
 
-local pseudoLanguages =
-{
-	"Console",
-	"Terminal Emulator"
-}
 function self:GetLanguageEnumerator ()
 	local languages = {}
 	for language in GCompute.Languages:GetEnumerator () do
@@ -105,7 +86,6 @@ function self:GetLanguageEnumerator ()
 	table.sort (languages)
 	
 	return GLib.Enumerator.Join (
-		GLib.Enumerator.ArrayEnumerator (pseudoLanguages),
 		GLib.Enumerator.ArrayEnumerator (languages)
 	)
 end
