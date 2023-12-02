@@ -201,13 +201,13 @@ function self:ctor (container)
 	)
 	
 	self.LanguageComboBox = vgui.Create ("GComboBox", container)
-	
+
 	self.LanguageComboBox:AddEventListener ("SelectedItemChanged",
 		function (_, lastSelectedItem, selectedItem)
 			self:SetLanguage (selectedItem and selectedItem:GetId ())
 		end
 	)
-	
+
 	local lastLanguageExists = nil
 	for language in GCompute.Execution.ExecutionService:GetLanguageEnumerator () do
 		local languageExists = GCompute.Languages.Get (language) ~= nil
@@ -216,20 +216,19 @@ function self:ctor (container)
 			self.LanguageComboBox:GetMenu ():AddSeparator ()
 		end
 		lastLanguageExists = languageExists
-		
-		local comboBoxItem = self.LanguageComboBox:AddItem (language)
-		comboBoxItem:SetIcon (icons [language])
+
+		self.LanguageComboBox:AddItem (language)
 	end
-	
+
 	-- Input
 	self.InputHistory = {}
 	self.InputHistoryPosition = 1
-	
+
 	self.Input = vgui.Create ("GComputeCodeEditor", container)
 	self.Input:SetMultiline (false)
 	self.Input:SetLineNumbersVisible (false)
 	self.Input:SetHorizontalScrollbarEnabled (false)
-	
+
 	self.Input:SetKeyboardMap (self.Input:GetKeyboardMap ():Clone ())
 	self.Input:GetKeyboardMap ():Register (KEY_ENTER,
 		function (_, key, ctrl, shift, alt)
