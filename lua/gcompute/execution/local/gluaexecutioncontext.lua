@@ -7,10 +7,7 @@ function self:ctor (ownerId, contextOptions)
 	
 	if self:IsEasyContext () then
 		self.Environment = {}
-		
-		-- Metatables
-		self.Environment._R = debug.getregistry ()
-		
+
 		-- IEEE floating point
 		self.Environment.inf = math.huge
 		self.Environment.nan = 0 / 0
