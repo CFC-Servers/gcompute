@@ -18,9 +18,9 @@ You will need to install the following addons additionally:
 - To adjust the font size in GCompute, use the `gcompute_default_fontsize` convar
 
 ## Changes from the original
-- Loading is now down asynchronously, preventing your game from entirely locking up _(may still happen [if the server has lots of legacy addons](https://github.com/Facepunch/garrysmod-issues/issues/5674))_
+- Loading is now done asynchronously, preventing your game from entirely locking up _(may still happen [if the server has lots of legacy addons](https://github.com/Facepunch/garrysmod-issues/issues/5674))_
 - Increased font size across the board, and added font size configuration
-- Prevent the insertion of the `\`` character when opening the console with GCompute open
+- Prevent the insertion of the ` character when opening the console with GCompute open
 - Removed a ton of niche/dead code, makes the editor focus exclusively on running GLua
 - Use spaces instead of tabs when auto-indenting in the editor
 - Removed all uses of `debug.getregistry` so that it actually works
