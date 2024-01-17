@@ -24,6 +24,7 @@ You will need to install the following addons additionally:
 - Removed a ton of niche/dead code, makes the editor focus exclusively on running GLua
 - Use spaces instead of tabs when auto-indenting in the editor
 - Removed all uses of `debug.getregistry` so that it actually works
+- GLib Namecache improvements - ignore more tables from modern addons _(makes loading faster)_
 
 ## IDE Features
 - Draggable and dockable views - the workspace can be arranged any way you want
